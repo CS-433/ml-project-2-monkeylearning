@@ -2,3 +2,4 @@
 /template/test_set_images
 /template/predicted_masks
 *.keras
+*.png
