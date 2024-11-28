@@ -3,3 +3,6 @@
 /template/predicted_masks
 *.keras
 *.png
+
+/data/
+**/__pycache__/
