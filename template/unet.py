@@ -65,39 +65,7 @@ def load_masks(mask_paths, img_height, img_width):
 
 
 
-# Function to load and patchify images
-def load_and_patchify_images(image_paths):
-    image_patches = []
-    for img_path in image_paths:
-        with Image.open(img_path) as img:
-            img = np.array(img)
-            # Extract patches of size 200x200
-            patches = patchify(img, (PATCH_SIZE, PATCH_SIZE, IMG_CHANNELS), step=PATCH_SIZE)
-            for i in range(patches.shape[0]):
-                for j in range(patches.shape[1]):
-                    patch = patches[i, j, 0, :, :, :]
-                    # Normalize each patch
-                    patch = scaler.fit_transform(patch.reshape(-1, patch.shape[-1])).reshape(patch.shape)
-                    image_patches.append(patch)
-    return np.array(image_patches)
 
-# Function to load and patchify masks
-def load_and_patchify_masks(mask_paths):
-    mask_patches = []
-    for mask_path in mask_paths:
-        with Image.open(mask_path) as mask:
-            mask = mask.convert('L')  # Convert to grayscale
-            mask = np.array(mask)
-            # Extract patches of size 200x200
-            patches = patchify(mask, (PATCH_SIZE, PATCH_SIZE), step=PATCH_SIZE)
-            for i in range(patches.shape[0]):
-                for j in range(patches.shape[1]):
-                    patch = patches[i, j, :, :]
-                    # Normalize each patch
-                    patch = scaler.fit_transform(patch.reshape(-1, 1)).reshape(patch.shape)
-                    patch = np.expand_dims(patch, axis=-1)  # Add channel dimension
-                    mask_patches.append(patch)
-    return np.array(mask_patches)
 
 
 
@@ -110,10 +78,6 @@ logging.info(f'Number of training masks: {len(train_mask_paths)}')
 
 X = load_images(train_image_paths, IMG_HEIGHT, IMG_WIDTH)
 Y = load_masks(train_mask_paths, IMG_HEIGHT, IMG_WIDTH)
-
-# Load and process patches for images and masks
-# X = load_and_patchify_images(train_image_paths)
-# Y = load_and_patchify_masks(train_mask_paths)
 
 # Binarize masks
 Y = (Y > 0.5).astype(np.float32)
