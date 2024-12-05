@@ -4,10 +4,10 @@ import glob
 from PIL import Image
 from random import randint
 
-CROP_SIZE = 282
+CROP_SIZE = 400
 SCALE_SIZE = 400
 
-NUMBER_OF_EXTRA_SAMPLES = 2
+NUMBER_OF_EXTRA_SAMPLES = 3
 
 IMAGES_PATH = "data/training/images/"
 GROUNDTRUTH_PATH = "data/training/groundtruth/"
@@ -49,8 +49,8 @@ def generate_new_sample(img_path, orientation):
     img = open_img(img_path)
     return upscale(img_centered_crop(img.rotate(orientation), CROP_SIZE, CROP_SIZE), SCALE_SIZE, SCALE_SIZE)
 
-def new_sample(id):
-    orientation = randint(-1, 361)
+def new_sample(id, variation_id):
+    orientation = (variation_id)*90
     x = generate_new_sample(image_path_from_id(id), orientation)
     y = generate_new_sample(groundtruth_path_from_id(id), orientation)
     return x, y
@@ -112,6 +112,6 @@ if __name__ == "__main__":
         groundtruth = upscale(groundtruth, SCALE_SIZE, SCALE_SIZE)
         groundtruth.save(augmented_groundtruth_path_from_id(id))
         for variation_id in range(1, NUMBER_OF_EXTRA_SAMPLES + 1):
-            new_img, new_groundtruth = new_sample(id)
+            new_img, new_groundtruth = new_sample(id, variation_id)
             new_img.save(augmented_image_path_from_id(id, variation_id))
             new_groundtruth.save(augmented_groundtruth_path_from_id(id, variation_id))

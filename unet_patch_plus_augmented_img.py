@@ -31,7 +31,7 @@ IMG_WIDTH = 400
 PATCH_SIZE = 256  # New patch size
 IMG_CHANNELS = 3
 BATCH_SIZE = 4
-EPOCHS = 50
+EPOCHS = 100
 SEED = 42
 
 # Initialize MinMaxScaler
@@ -106,7 +106,7 @@ Y = (Y > 0.5).astype(np.float32)
 
 # Split data into training and validation sets
 X_train, X_valid, Y_train, Y_valid = train_test_split(
-    X, Y, test_size=0.1, random_state=SEED
+    X, Y, test_size=0.2, random_state=SEED
 )
 
 logging.info(f'Training set size: {X_train.shape[0]}')
@@ -196,7 +196,7 @@ checkpoint = ModelCheckpoint(
     'unet_road_segmentation.keras', verbose=1, save_best_only=True
 )
 earlystop = EarlyStopping(patience=10, verbose=1)
-callbacks_list = [checkpoint, earlystop]
+callbacks_list = [checkpoint]
 
 # Train the model
 history = model.fit(
