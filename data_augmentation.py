@@ -1,10 +1,13 @@
 import sys
 import os
+import glob
 from PIL import Image
 from random import randint
 
 CROP_SIZE = 282
-SCALE_SIZE = 608
+SCALE_SIZE = 400
+
+NUMBER_OF_EXTRA_SAMPLES = 2
 
 IMAGES_PATH = "data/training/images/"
 GROUNDTRUTH_PATH = "data/training/groundtruth/"
@@ -15,7 +18,7 @@ def open_img(img_path):
     return Image.open(img_path)
 
 def image_name_from_id(id, variation_id=""):
-    return f"satImage_{id:03d}{"-" + str(variation_id) if variation_id != "" else ""}.png"
+    return f'satImage_{id:03d}{"-" + str(variation_id) if variation_id != "" else ""}.png'
 
 def image_path_from_id(id):
     return IMAGES_PATH + image_name_from_id(id)
@@ -86,21 +89,29 @@ if __name__ == "__main__":
             make_img_overlay(img, groundtruth).show()
         sys.exit()
 
-    if not os.path.exists(AUGMENTED_IMAGES_PATH):
+    if os.path.exists(AUGMENTED_IMAGES_PATH):
+        png_files = glob.glob(os.path.join(AUGMENTED_IMAGES_PATH, '*.png'))
+        for file in png_files:
+            os.remove(file)
+    else:
         os.mkdir(AUGMENTED_IMAGES_PATH)
-    if not os.path.exists(AUGMENTED_GROUNDTRUTH_PATH):
+
+    if os.path.exists(AUGMENTED_GROUNDTRUTH_PATH):
+        png_files = glob.glob(os.path.join(AUGMENTED_GROUNDTRUTH_PATH, '*.png'))
+        for file in png_files:
+            os.remove(file)     
+    else:
         os.mkdir(AUGMENTED_GROUNDTRUTH_PATH)
+
     for id in range(1, 101):
         print(f"Current id: {id}")
         img = open_img(image_path_from_id(id))
         groundtruth = open_img(groundtruth_path_from_id(id))
         img = upscale(img, SCALE_SIZE, SCALE_SIZE)
+        img.save(augmented_image_path_from_id(id))
         groundtruth = upscale(groundtruth, SCALE_SIZE, SCALE_SIZE)
         groundtruth.save(augmented_groundtruth_path_from_id(id))
-        for variation_id in range(1, 11):
+        for variation_id in range(1, NUMBER_OF_EXTRA_SAMPLES + 1):
             new_img, new_groundtruth = new_sample(id)
             new_img.save(augmented_image_path_from_id(id, variation_id))
             new_groundtruth.save(augmented_groundtruth_path_from_id(id, variation_id))
-            
-
-            
