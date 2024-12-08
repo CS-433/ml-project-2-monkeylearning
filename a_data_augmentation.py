@@ -15,11 +15,6 @@ TRAIN_GROUNDTRUTH_PATH = 'data/training/groundtruth/'
 PATCHES_IMG_DIR = 'data/training/patches/images'
 PATCHES_GT_DIR = 'data/training/patches/groundtruth'
 
-if not os.path.exists(PATCHES_IMG_DIR):
-    os.makedirs(PATCHES_IMG_DIR)
-if not os.path.exists(PATCHES_GT_DIR):
-    os.makedirs(PATCHES_GT_DIR)
-
 IMG_HEIGHT = 400
 IMG_WIDTH = 400
 PATCH_SIZE = 256
@@ -35,6 +30,21 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # ---------------------------
 # Helper functions
 # ---------------------------
+
+def clear_directory(directory):
+    """Remove all files in the given directory."""
+    if os.path.exists(directory):
+        for file in os.listdir(directory):
+            file_path = os.path.join(directory, file)
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                os.rmdir(file_path)
+        logging.info(f"Cleared directory: {directory}")
+    else:
+        os.makedirs(directory)
+        logging.info(f"Created directory: {directory}")
+
 def image_name_from_id(id):
     return f"satImage_{id:03d}.png"
 
@@ -99,6 +109,17 @@ def extract_patches(img, patch_size, overlap):
 
 def binarize_masks(Y):
     return (Y > 0.5).astype(np.float32)
+
+
+# Clear the folders before use
+clear_directory(PATCHES_IMG_DIR)
+clear_directory(PATCHES_GT_DIR)
+
+# Ensure directories exist
+if not os.path.exists(PATCHES_IMG_DIR):
+    os.makedirs(PATCHES_IMG_DIR)
+if not os.path.exists(PATCHES_GT_DIR):
+    os.makedirs(PATCHES_GT_DIR)
 
 # ---------------------------
 # Load original data
