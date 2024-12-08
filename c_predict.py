@@ -9,7 +9,7 @@ from skimage.morphology import binary_closing, disk, remove_small_objects, remov
 from skimage.util import img_as_ubyte
 
 # Define paths
-MODEL_WEIGHTS_PATH = 'unet_road_segmentation_rotation.keras'  # Trained model weights
+MODEL_WEIGHTS_PATH = 'weights.keras'  # Trained model weights
 TEST_IMAGES_PATH = 'data/test_set_images/'                # Path to test images (with subfolders)
 PREDICTED_MASKS_PATH = 'data/predicted_masks/'            # Directory to save predicted masks
 

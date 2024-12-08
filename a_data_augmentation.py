@@ -20,7 +20,9 @@ IMG_WIDTH = 400
 PATCH_SIZE = 256
 IMG_CHANNELS = 3
 NUM_IMAGES = 100
-NUM_RANDOM_ANGLES = 5
+NUM_RANDOM_ANGLES = 3
+set_random_angles = True
+
 overlap = PATCH_SIZE - (IMG_HEIGHT - PATCH_SIZE)  # Should be 112
 
 scaler = MinMaxScaler()
@@ -183,6 +185,9 @@ Y_main = binarize_masks(Y_main)
 X_random = []
 Y_random = []
 
+if set_random_angles == False:
+    NUM_RANDOM_ANGLES = 4
+    angles_random = [45, 135, 225, 315]
 
 for i in range(NUM_IMAGES):
     img = (X_original[i]*255).astype('uint8')
@@ -192,7 +197,10 @@ for i in range(NUM_IMAGES):
     mask_pil = Image.fromarray(mask)
     
     for angle in range(NUM_RANDOM_ANGLES):
-        random_angle = randint(2, 357)
+        if set_random_angles:
+            angle = randint(2, 357)
+        else :
+            angle = angles_random[angle]
         rotated_img = rotate_image(img_pil, angle)
         rotated_mask = rotate_image(mask_pil, angle)
         
