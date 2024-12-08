@@ -57,9 +57,9 @@ def adjust_hsv(img_array):
     Adjust hue, saturation, and brightness of the given RGB image array (values in [0,1]).
     We'll apply small random variations.
     """
-    hue_shift_range = 0.02   # small hue shift
-    sat_scale_range = (0.95, 1.05)
-    val_scale_range = (0.95, 1.05)
+    hue_shift_range = 0.02
+    sat_scale_range = (0.9, 1.1)
+    val_scale_range = (0.9, 1.1)
     
     hsv = rgb2hsv(img_array)
     h = hsv[:,:,0]
@@ -122,7 +122,7 @@ Y_original = np.array(Y_original)
 # ---------------------------
 # Create patches from main rotations (0°,90°,180°,270°)
 # ---------------------------
-angles_main = [0, 90, 180, 270]
+angles_main = [0, 90]
 X_main = []
 Y_main = []
 
@@ -156,11 +156,11 @@ Y_main = np.array(Y_main)
 Y_main = binarize_masks(Y_main)
 
 # ---------------------------
-# Create patches from random angles (45, 135, 225, 315)
+# Create patches from random angles
 # ---------------------------
 X_random = []
 Y_random = []
-angles_random = [45, 135, 225, 315]
+
 
 for i in range(NUM_IMAGES):
     img = (X_original[i]*255).astype('uint8')
@@ -169,7 +169,8 @@ for i in range(NUM_IMAGES):
     img_pil = Image.fromarray(img)
     mask_pil = Image.fromarray(mask)
     
-    for angle in angles_random:
+    for angle in range(10):
+        random_angle = randint(2, 357)
         rotated_img = rotate_image(img_pil, angle)
         rotated_mask = rotate_image(mask_pil, angle)
         
@@ -201,7 +202,7 @@ Y_random = binarize_masks(Y_random)
 X_combined = np.concatenate((X_main, X_random), axis=0)
 Y_combined = np.concatenate((Y_main, Y_random), axis=0)
 
-logging.info(f"Total patches: {X_combined.shape[0]} (expected 2000)")
+logging.info(f"Total patches: {X_combined.shape[0]}")
 
 # ---------------------------
 # Save patches to disk
