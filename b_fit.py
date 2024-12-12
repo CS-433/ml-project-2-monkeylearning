@@ -1,4 +1,5 @@
 import os
+os.environ["SM_FRAMEWORK"] = "tf.keras"
 import numpy as np
 from PIL import Image
 from glob import glob
