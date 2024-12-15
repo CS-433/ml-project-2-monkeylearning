@@ -1,7 +1,10 @@
-import glob
+import os
 import tkinter as tk
 from tkinter import ttk
+from glob import glob
 from PIL import Image, ImageTk
+
+from config import *
 
 def make_img_overlay(x, y):
     x = x.convert("RGB")
@@ -25,12 +28,9 @@ def on_mouse_wheel(event, canvas):
     delta = event.delta if event.delta else -event.num  # Windows/Mac vs Linux
     canvas.yview_scroll(int(-delta / 120), "units")
 
-def main():
+def main(test_images_dir=TEST_IMAGES_DIR):
     # Find all test images
-    image_paths = sorted(
-        glob.glob("data/test_set_images/test_*/*.png"),
-        key=lambda x: int(x.split('/')[-1].split('_')[-1].split('.')[0])
-    )
+    image_paths = sorted(glob(os.path.join(test_images_dir, '**/*.png'), recursive=True))
 
     if not image_paths:
         print("No test images found.")
@@ -76,7 +76,7 @@ def main():
 
     for idx, img_path in enumerate(image_paths):
         test_id = img_path.split('/')[-1].split('.')[0].split('_')[-1]
-        mask_path = f"data/predicted_masks/test_{test_id}.png"
+        mask_path = f"{PREDICTED_GROUNDTRUTH_DIR}/test_{test_id}.png"
 
         try:
             img = Image.open(img_path)

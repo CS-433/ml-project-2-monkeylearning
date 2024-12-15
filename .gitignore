@@ -1,8 +1,9 @@
+**/__pycache__/
+data/
+saved_models/
+
 /template/training
 /template/test_set_images
 /template/predicted_masks
 *.keras
 *.png
-
-/data/
-**/__pycache__/

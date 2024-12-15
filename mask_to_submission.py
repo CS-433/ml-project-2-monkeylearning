@@ -55,7 +55,7 @@ def masks_to_submission(submission_filename, *image_filenames):
     print(f"Total rows written to {submission_filename}: {total_rows}")
 
 
-if __name__ == '__main__':
+def main():
     submission_filename = 'ml_submission.csv'
     predicted_masks_folder = 'data/predicted_masks'
     
@@ -75,3 +75,6 @@ if __name__ == '__main__':
     
     # Create the submission file
     masks_to_submission(submission_filename, *image_filenames)
+
+if __name__ == '__main__':
+    main()
