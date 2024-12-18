@@ -19,6 +19,45 @@ The key steps in the project include:
 
 ---
 
+## Project Usage
+
+### Clone the Repository
+```bash
+git clone https://github.com/CS-433/ml-project-2-monkeylearning.git
+cd ml-project-2-monkeylearning
+```
+
+### Create a Python Environment
+Set up a virtual environment and install the required dependencies:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Run the Best Model
+Execute the run.py script to perform the full pipeline of the best model:
+```bash
+python3 run.py
+```
+
+```
+usage: python3 run.py [--prediction | -p] [--custom_prediction | -cp] [--show_train_graph | -stg] [--help]
+
+Performs data augmentation, training and prediction
+
+options:
+  -h, --help            show this help message and exit
+  --prediction, -p      prediction only
+  --custom_prediction, -cp
+                        prediction only (use the custom test set)
+  --show_train_graph, -stg
+                        displays the train history graph after training
+```
+
+---
+
 ## Code Structure
 
 - **`data/`**  
@@ -56,32 +95,3 @@ The key steps in the project include:
   
 - **`report.pdf`**  
   Documents findings and project analysis.
-
----
-
-## Project Usage
-
-### Clone the Repository
-```bash
-git clone https://github.com/CS-433/ml-project-2-monkeylearning.git
-cd ml-project-2-monkeylearning
-```
-
-### Download the dataset
-Download the dataset from the [AIcrowd website](https://www.aicrowd.com/challenges/epfl-ml-road-segmentation/dataset_files) and place it in the `data/` directory.
-
-### Create a Python Environment
-Set up a virtual environment and install the required dependencies:
-
-```bash
-Copy code
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Run the Best Model
-Execute the run.py script to perform the full pipeline of the best model:
-```bash
-python3 run.py
-```
