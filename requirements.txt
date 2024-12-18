@@ -1,0 +1,6 @@
+tensorflow[and-cuda]
+pillow
+scikit-learn
+scikit-image
+segmentation-models
+matplotlib
