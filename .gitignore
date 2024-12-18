@@ -1,9 +1,10 @@
 **/__pycache__/
 venv/
 
-data/
+data/*/
+!data/training/
+!data/test_set_images/
 saved_models/
 
-*.keras
 *.png
 **/ml_submission.csv
