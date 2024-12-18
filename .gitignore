@@ -4,7 +4,6 @@ venv/
 data/*/
 !data/training/
 !data/test_set_images/
-saved_models/
 
 *.png
 **/ml_submission.csv
