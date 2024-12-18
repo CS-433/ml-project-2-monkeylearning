@@ -18,7 +18,7 @@ from config import *
 # ---------------------------
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def main():
+def main(show_train_graph=False):
     # ---------------------------
     # Load all patches
     # ---------------------------
@@ -103,4 +103,8 @@ def main():
         plt.legend(['Train', 'Validation'], loc='upper left')
         plt.show()
 
-    plot_training_history(history)
+    if show_train_graph:
+        plot_training_history(history)
+
+if __name__ == "__main__":
+    main(True)

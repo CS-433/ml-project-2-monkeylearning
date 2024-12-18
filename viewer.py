@@ -18,7 +18,7 @@ def make_img_overlay(x, y):
         for j in range(y.width):
             if pixels_y[j, i] != (0, 0, 0):
                 r, g, b = pixels_result[j, i]
-                r = min(255, r + 60)
+                b = min(255, r + 60)
                 pixels_result[j, i] = (r, g, b)
 
     return result
