@@ -6,6 +6,8 @@ This project aims to classify roads on satellite images from Google Maps in subu
 
 The dataset is sourced from the [AIcrowd EPFL ML Road Segmentation challenge](https://www.aicrowd.com/challenges/epfl-ml-road-segmentation/dataset_files).
 
+The results obtained on the test set can be visualized [here](https://github.com/CS-433/ml-project-2-monkeylearning/blob/main/results.pdf)
+
 ---
 
 ## Project Overview
