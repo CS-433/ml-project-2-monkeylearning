@@ -1,4 +1,3 @@
-from time import time
 # ---------------------------
 # Configuration
 # ---------------------------
@@ -14,9 +13,7 @@ TEST_IMAGES_DIR = 'data/test_set_images'
 CUSTOM_TEST_IMAGES_DIR = 'data/custom_test_images'
 PREDICTED_GROUNDTRUTH_DIR = 'data/predicted_masks'
 
-MODEL_WEIGHTS_PATH = 'saved_models/weights.keras'
-if False:
-    MODEL_WEIGHTS_PATH = f'saved_models/weights_{time()}.keras'
+MODEL_WEIGHTS_PATH = 'saved_models/unet.keras'
 
 NUM_TRAIN_IMAGES = 100
 TRAIN_IMG_HEIGHT = 400
